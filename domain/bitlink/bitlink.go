@@ -4,8 +4,12 @@ import (
 	"time"
 )
 
+type Identifier interface {
+	Random() string
+}
+
 type Factory struct {
-	hash Hash
+	identifier Identifier
 }
 
 func (f *Factory) Make(url URL) (*BitLink, error) {
@@ -16,7 +20,7 @@ func (f *Factory) Make(url URL) (*BitLink, error) {
 	now := time.Now()
 
 	return &BitLink{
-		hash:        f.hash.Random(),
+		id:          f.identifier.Random(),
 		destination: url,
 		createdAt:   now,
 		updatedAt:   now,
@@ -24,14 +28,14 @@ func (f *Factory) Make(url URL) (*BitLink, error) {
 }
 
 type BitLink struct {
-	hash        string
+	id          string
 	destination URL
 	createdAt   time.Time
 	updatedAt   time.Time
 }
 
-func (b *BitLink) Hash() string {
-	return b.hash
+func (b *BitLink) Id() string {
+	return b.id
 }
 
 func (b *BitLink) Destination() URL {

@@ -10,7 +10,7 @@ import (
 func TestNewBitLink(t *testing.T) {
 
 	factory := Factory{
-		hash: HashStub{},
+		identifier: IdentifierStub{},
 	}
 
 	t.Run("given an empty url", func(t *testing.T) {
@@ -25,14 +25,14 @@ func TestNewBitLink(t *testing.T) {
 		assert.Nil(t, err)
 		assert.IsType(t, &BitLink{}, b)
 		assert.Equal(t, URL("www.google.com"), b.Destination())
-		assert.Equal(t, "some-hash", b.Hash())
+		assert.Equal(t, "some-identifier", b.Id())
 		assert.IsType(t, &time.Time{}, b.CreatedAt())
 		assert.IsType(t, &time.Time{}, b.UpdatedAt())
 	})
 }
 
-type HashStub struct{}
+type IdentifierStub struct{}
 
-func (h HashStub) Random() string {
-	return "some-hash"
+func (h IdentifierStub) Random() string {
+	return "some-identifier"
 }
