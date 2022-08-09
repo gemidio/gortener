@@ -20,26 +20,26 @@ func (f *Factory) Make(url URL) (*BitLink, error) {
 	now := time.Now()
 
 	return &BitLink{
-		id:          f.identifier.Random(),
-		destination: url,
-		createdAt:   now,
-		updatedAt:   now,
+		id:        f.identifier.Random(),
+		url:       url,
+		createdAt: now,
+		updatedAt: now,
 	}, nil
 }
 
 type BitLink struct {
-	id          string
-	destination URL
-	createdAt   time.Time
-	updatedAt   time.Time
+	id        string
+	url       URL
+	createdAt time.Time
+	updatedAt time.Time
 }
 
 func (b *BitLink) Id() string {
 	return b.id
 }
 
-func (b *BitLink) Destination() URL {
-	return b.destination
+func (b *BitLink) URL() URL {
+	return b.url
 }
 
 func (b *BitLink) CreatedAt() *time.Time {

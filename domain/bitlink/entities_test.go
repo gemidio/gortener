@@ -24,7 +24,7 @@ func TestNewBitLink(t *testing.T) {
 
 		assert.Nil(t, err)
 		assert.IsType(t, &BitLink{}, b)
-		assert.Equal(t, URL("www.google.com"), b.Destination())
+		assert.Equal(t, URL("www.google.com"), b.URL())
 		assert.Equal(t, "some-identifier", b.Id())
 		assert.IsType(t, &time.Time{}, b.CreatedAt())
 		assert.IsType(t, &time.Time{}, b.UpdatedAt())
