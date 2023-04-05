@@ -1,7 +1,11 @@
 package bitlink
 
 import (
+	"errors"
+	"regexp"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Identifier interface {
@@ -20,11 +24,24 @@ func (f *Factory) Make(url URL) (*BitLink, error) {
 	now := time.Now()
 
 	return &BitLink{
-		id:        f.identifier.Random(),
+		id:        uuid.NewString(),
 		url:       url,
 		createdAt: now,
 		updatedAt: now,
 	}, nil
+}
+
+var (
+	ErrInvalidURL error = errors.New("url is invalid")
+)
+
+type URL string
+
+func (u URL) isValid() bool {
+	pattern := "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"
+	isValid, _ := regexp.Match(pattern, []byte(u))
+
+	return isValid
 }
 
 type BitLink struct {
